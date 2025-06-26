@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FuelShare</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="form-wrapper">
+        <div class="form-container" id="formContainer">
+          <div class="form-side login-form">
+            <div class="form-header">
+              <h1 class="form-title">FuelShare</h1>
+            </div>
+
+            <div class="form-divider mb-3">
+              <span>Split FuelShare Bill</span>
+            </div>
+
+            <!-- Calculation Form -->
+            <form method="POST" action="/calculate">
+              <input type="hidden" name="email" value="{{ email }}" />
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Car Average</label>
+                  <input
+                    type="number"
+                    class="form-input"
+                    name="car_avg"
+                    step="0.1"
+                    placeholder="Car Average"
+                    value="{{ form_data.car_avg if form_data and form_data.car_avg else '' }}"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Petrol Price (₹/L)</label>
+                  <input
+                    type="number"
+                    class="form-input"
+                    name="petrol_price"
+                    step="0.1"
+                    placeholder="Petrol Price"
+                    value="{{ form_data.petrol_price if form_data and form_data.petrol_price else '' }}"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Total Destination (KM)</label>
+                  <input
+                    type="number"
+                    class="form-input"
+                    name="km"
+                    step="0.1"
+                    placeholder="Total KM"
+                    value="{{ form_data.km if form_data and form_data.km else '' }}"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Total Person</label>
+                  <input
+                    type="number"
+                    class="form-input"
+                    name="person_count"
+                    placeholder="Total Persons"
+                    value="{{ form_data.person_count if form_data and form_data.person_count else '' }}"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button type="submit" class="submit-btn">Calculate</button>
+            </form>
+
+            <!-- Result Section -->
+            {% if per_km_cost %}
+            <div class="form-divider">
+              <span>Details are below</span>
+            </div>
+
+            <div class="form-options">
+              <div class="checkbox-group">
+                <label class="form-label">Per Kilometer:</label>
+              </div>
+              <a href="#" class="forgot-link">₹{{ per_km_cost }} / KM</a>
+            </div>
+
+            <div class="form-options">
+              <div class="checkbox-group">
+                <label class="form-label">Total Petrol Needed:</label>
+              </div>
+              <a href="#" class="forgot-link">{{ total_petrol }} L</a>
+            </div>
+
+            <div class="form-options">
+              <div class="checkbox-group">
+                <label class="form-label">Total Petrol Cost:</label>
+              </div>
+              <a href="#" class="forgot-link">₹{{ petrol_cost }}</a>
+            </div>
+
+            <div class="form-options">
+              <div class="checkbox-group">
+                <label class="form-label">Per Person:</label>
+              </div>
+              <a href="#" class="forgot-link">₹{{ per_person }}</a>
+            </div>
+
+            <div class="form-options">
+              <div class="checkbox-group">
+                <label class="form-label">Total Amount:</label>
+              </div>
+              <a href="#" class="forgot-link">₹{{ total_amount }}</a>
+            </div>
+
+            <!-- Email Form -->
+            <form action="/send-email" method="POST">
+              <input type="hidden" name="email" value="{{ email }}" />
+
+              <!-- Input Data -->
+              <input
+                type="hidden"
+                name="car_avg"
+                value="{{ form_data.car_avg }}"
+              />
+              <input
+                type="hidden"
+                name="petrol_price"
+                value="{{ form_data.petrol_price }}"
+              />
+              <input type="hidden" name="km" value="{{ form_data.km }}" />
+              <input
+                type="hidden"
+                name="person_count"
+                value="{{ form_data.person_count }}"
+              />
+
+              <!-- Results -->
+              <input
+                type="hidden"
+                name="per_km_cost"
+                value="{{ per_km_cost }}"
+              />
+              <input
+                type="hidden"
+                name="total_petrol"
+                value="{{ total_petrol }}"
+              />
+              <input
+                type="hidden"
+                name="petrol_cost"
+                value="{{ petrol_cost }}"
+              />
+              <input type="hidden" name="per_person" value="{{ per_person }}" />
+              <input
+                type="hidden"
+                name="total_amount"
+                value="{{ total_amount }}"
+              />
+
+              <p class="switch-text">
+                Send it to mail
+                <button type="submit" class="sent-mail">Click Me</button>
+              </p>
+            </form>
+            {% endif %} {% if message %}
+
+            <div class="success-message">{{ message }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
