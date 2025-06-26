@@ -1,6 +1,6 @@
 # 🚗 FuelShare — Smart Travel Fuel Split Calculator
 
-![FuelShare Screenshot](screenshot.png)
+![FuelShare Screenshot](screenshots/LandingPage.png)
 
 FuelShare is a **Flask-based full-stack web application** that calculates and shares fuel cost summaries for group travel. Enter trip details (distance, mileage, fuel rate, people count) and instantly get a breakdown emailed to you — all securely and beautifully rendered.
 
@@ -33,19 +33,19 @@ This app solves a real problem — quickly splitting travel fuel costs among peo
 
 ## 📸 Screenshot
 
-![FuelShare UI Preview](screenshot.png)
+![FuelShare UI Preview](screenshots/CalculatePage.png)
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer     | Technologies Used                       |
-|-----------|------------------------------------------|
-| Frontend  | HTML, CSS, custom styles (no framework) |
-| Backend   | Python, Flask                           |
-| Email     | `smtplib`, `email.mime`, `ssl`, Hostinger SMTP |
-| Config    | `python-dotenv` for secure `.env` usage |
-| Hosting   | Live at Hostinger (`fuelshare.webspidy.in`) |
+| Layer    | Technologies Used                              |
+| -------- | ---------------------------------------------- |
+| Frontend | HTML, CSS, custom styles (no framework)        |
+| Backend  | Python, Flask                                  |
+| Email    | `smtplib`, `email.mime`, `ssl`, Hostinger SMTP |
+| Config   | `python-dotenv` for secure `.env` usage        |
+| Hosting  | Live at Hostinger (`fuelshare.webspidy.in`)    |
 
 ---
 
@@ -64,9 +64,13 @@ venv\Scripts\activate         # Windows
 # Install dependencies
 pip install -r requirements.txt
 
+python -m pip install python-dotenv
+
 # Create your environment file
 cp .env.example .env
 # Then edit `.env` to add your email credentials
 
+
 # Run the server
 flask run
+```
